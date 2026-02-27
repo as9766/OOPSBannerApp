@@ -2,81 +2,65 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OOPSBannerApp {
+    private static final Map<Character, String[]> patternMap = new HashMap<>();
+    static {
 
-    public static void main(String[] args) {
+        patternMap.put('O', new String[]{
+                " ***** ",
+                "*     *",
+                "*     *",
+                "*     *",
+                "*     *",
+                "*     *",
+                " ***** "
+        });
 
-        String word = "OOPS";
-        CharacterPatternMap patternMap = new CharacterPatternMap();
+        patternMap.put('P', new String[]{
+                "****** ",
+                "*     *",
+                "*     *",
+                "****** ",
+                "*      ",
+                "*      ",
+                "*      "
+        });
 
-        StringBuilder[] bannerLines = new StringBuilder[7];
-
-        for (int i = 0; i < 7; i++) {
-            bannerLines[i] = new StringBuilder();
-        }
-
-        for (char ch : word.toCharArray()) {
-
-            String[] pattern = patternMap.getPattern(ch);
-
-            for (int i = 0; i < 7; i++) {
-                bannerLines[i].append(pattern[i]).append("   ");
-            }
-        }
-
-        for (StringBuilder line : bannerLines) {
-            System.out.println(line.toString());
-        }
+        patternMap.put('S', new String[]{
+                " ***** ",
+                "*     *",
+                "*      ",
+                " ***** ",
+                "      *",
+                "*     *",
+                " ***** "
+        });
     }
 
-    // Static Inner Class
-    static class CharacterPatternMap {
+    public static void main(String[] args) {
+        renderBanner("OOPS");
+    }
+    public static void renderBanner(String word) {
 
-        private final Map<Character, String[]> patternStore;
+        for (int row = 0; row < 7; row++) {
 
-        public CharacterPatternMap() {
-            patternStore = new HashMap<>();
+            StringBuilder line = new StringBuilder();
 
-            patternStore.put('O', new String[]{
-                    " ***** ",
-                    "*     *",
-                    "*     *",
-                    "*     *",
-                    "*     *",
-                    "*     *",
-                    " ***** "
-            });
+            for (char ch : word.toCharArray()) {
 
-            patternStore.put('P', new String[]{
-                    "****** ",
-                    "*     *",
-                    "*     *",
-                    "****** ",
-                    "*      ",
-                    "*      ",
-                    "*      "
-            });
+                String[] pattern = patternMap.getOrDefault(ch, new String[]{
+                        "       ",
+                        "       ",
+                        "       ",
+                        "       ",
+                        "       ",
+                        "       ",
+                        "       "
+                });
 
-            patternStore.put('S', new String[]{
-                    " ***** ",
-                    "*     *",
-                    "*      ",
-                    " ***** ",
-                    "      *",
-                    "*     *",
-                    " ***** "
-            });
-        }
+                line.append(pattern[row]).append("   ");
+            }
 
-        public String[] getPattern(char ch) {
-            return patternStore.getOrDefault(ch, new String[]{
-                    "       ",
-                    "       ",
-                    "       ",
-                    "       ",
-                    "       ",
-                    "       ",
-                    "       "
-            });
+            System.out.println(line);
         }
     }
 }
